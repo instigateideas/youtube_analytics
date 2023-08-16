@@ -1,0 +1,143 @@
+.home-layout {
+    margin: 0px;
+    padding: 0px;
+    background-color: #1c2039;
+    display: 100vh;
+}
+
+.home-partion {
+    display: 0.5px block white;
+}
+
+.country-graph {
+    width: 50%;
+    text-align: center;
+    display: inline-block;
+}
+
+.trend-head {
+    text-align: center;
+    justify-content: center;
+    padding-top: 5px;
+}
+
+.graph-area {
+    padding: 20px;
+    padding-top: 0px;  
+}
+
+.graph-card {
+    display: flex;
+    flex-direction: row;
+    height: 25em;
+    border:0.5px solid white;
+}
+
+.graph-left-pane {
+    width: 25%;
+    display: inline-block;
+}
+
+.graph-right-pane {
+    width: 75%;
+    display: inline-block;
+}
+
+.graph-pane {
+    width: 100%;
+    height: 100%;
+    padding: 7px;
+    display: inline-block;
+}
+
+.rectangle-graph {
+    border: 0.5px solid white;
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+    display: inline-block;
+}
+
+.graph-data .dash-graph {
+    height: 22.5em;
+    padding: 10px;
+    width: 100%;
+}
+
+.rectangle-with-border {
+    margin: 10px;
+    margin-top: 6.8px;
+    margin-bottom: 6.8px;
+    width: 90%;
+    height: 5em;
+    background-color: #262b49;
+    border: 0.5px solid white;
+    border-radius: 8px;
+    padding: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Side Pane Styling */
+.pane-head {
+    padding: 2px;
+    height: 30px;
+    font-size: 0.8em;
+    word-wrap: break-word;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.metric-image {
+    width: 20%;    
+}
+
+.icon-style {
+    width: 100%;
+    height: 100%;
+}
+
+.metric-title {
+    width: 80%;
+}
+
+.pane-metrics-splitted {
+    display: flex;
+    margin-top: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    padding: 2px;
+}
+
+.metric-1 {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    padding: 7px;
+    justify-content: space-between;
+}
+
+.metric-2 {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    padding: 3px;
+    padding-top: 7px;
+    justify-content: space-between;
+}
+
+.metric-name {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.metric-space {
+    width: 0px;
+}
+
+.metric-value {
+    font-size: 12px;
+    color: greenyellow;
+}

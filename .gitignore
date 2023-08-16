@@ -10,6 +10,9 @@ __pycache__/
 # C extensions
 *.so
 
+# GIT init
+git_init.sh
+
 # Distribution / packaging
 .Python
 build/

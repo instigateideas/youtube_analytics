@@ -1,0 +1,69 @@
+
+.agg-container {
+    padding: 20px;
+    padding-top: 0px;
+}
+
+.kpi-card {
+    background-color: #262b49;
+    border:0.5px solid white;
+    border-radius: 8px;
+    height: 6em;
+    display: flex;
+    flex-direction: row;
+}
+
+.kpi-logo {
+    width: 30%;
+    display: inline-block;
+    padding: 15px;
+}
+
+.kpi-img {
+    padding: 3px;
+    height: 50px;
+}
+
+.kpi-metric {
+    width: 70%;
+    display: inline-block;
+}
+
+.kpi-name {
+    margin: 5px;
+    font-size: 0.9em;
+    font-weight: 700;
+    word-wrap: break-word;
+    text-align: center;
+}
+
+.kpi-value {
+    margin: 5px;
+    font-size: 1.2em;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.usa-flag-kpi-value {
+    padding: 7px;
+    display: flex;
+}
+
+.ind-flag-kpi-value {
+    padding: 7px;
+    display: flex;
+}
+
+.country-flag {
+    width: 5px;
+    height: 5px;
+}
+
+.-kpi-value {
+    padding: 7px;
+}
+
+
