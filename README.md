@@ -59,6 +59,46 @@ Trending aims to balance all of these considerations. To achieve this, Trending 
     - Follower growth on social media over time
     - Avg Time on video/channel
 
+# Integrate
+- Likes during Trending
+- Comment during trending
+- Views during Trending
+- categories of Trending video
+
+# Pic analysis
+- Channels most trending videos (default)
+- WordCloud - common words in description, title, tags
+- Day most video published (day, hours)
+- Day in which most video trends (day, hours)
+- Hastags
+
+# Correlation Analysis
+- correlation of all the metics ('view_count', 'likes', 'dislikes', 'comment_count', 'num_tags',
+                   'tags_length', 'title_length', 'desc_length', 'publishing_hour')
+
+
+# Table Analysis
+Top 5's
+- Top 5 Emoji's used
+- Top 5 Symbols used
+- Top 5 common 2 bigrams
+- Top 5 common 3 grams
+
+Distributions
+- Distribution of time taken to trend
+- number of tags distribution
+- Title Lengths dstribution
+- description Lengths dstribution
+
+Social
+- No of Active Publishers
+- Refering to other video in description - Promotion (youtube link)
+- Social availalable in video (Facebook, instagram..etc)
+- Social links - count
+
+Object Detection
+- Processing thumbnails - object detection
+
 
 ## Dashboard Wireframe
 ![Wireframe Image](analytics_wireframe.jpg)

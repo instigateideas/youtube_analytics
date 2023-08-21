@@ -39,8 +39,9 @@
 
 .kpi-value {
     margin: 5px;
-    font-size: 1.2em;
-    font-weight: 700;
+    margin-left: 0px;
+    font-size: 0.95em;
+    font-weight: 650;
     text-align: center;
     display: flex;
     flex-direction: row;
@@ -50,16 +51,19 @@
 .usa-flag-kpi-value {
     padding: 7px;
     display: flex;
+    flex-direction: row;
 }
 
 .ind-flag-kpi-value {
     padding: 7px;
     display: flex;
+    flex-direction: row;
 }
 
 .country-flag {
-    width: 5px;
-    height: 5px;
+    padding: 2px;
+    width: 20px;
+    height: 25px;
 }
 
 .-kpi-value {

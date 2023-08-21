@@ -13,6 +13,14 @@ dash = "^2.11.1"
 dash-bootstrap-components = "^1.4.2"
 plotly = "^5.16.0"
 pandas = "^2.0.3"
+nltk = "^3.8.1"
+matplotlib = "^3.7.2"
+wordcloud = "^1.9.2"
+emoji = "^2.8.0"
+imageai = "^3.0.3"
+torch = "^2.0.1"
+torchvision = "^0.15.2"
+opencv-python = "^4.8.0.76"
 
 
 [build-system]
