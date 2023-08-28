@@ -9,9 +9,13 @@ from nltk.util import ngrams
 from nltk import download as nltk_download
 from matplotlib import pyplot as plt
 from collections import Counter
+from datetime import timedelta
 import wordcloud
-
+import base64
+from io import BytesIO
 import re
+
+cwd = os.getcwd()
 
 # For word clouds
 WC_MAX_FZ = 400 
@@ -61,26 +65,58 @@ def url_data_for_promotion_analysis(df, col_name):
 
     return pd.DataFrame(final_data)
 
-def  clean_create_neccessary_columns(df):
+def filter_data(df, day_frame):
+    df["TrendingDate"] = pd.to_datetime(df['trending_date'], format='%y.%d.%m')
+    df["PublishTime"] = pd.to_datetime(df['publish_time'], format='%Y-%m-%dT%H:%M:%S.%fZ')
+    df["TrendingTimeTaken"] = (df['TrendingDate'] - df['PublishTime']).dt.total_seconds() / 60 / 60
+    df["trending_time_taken"] = df["TrendingTimeTaken"].abs()
+    max_date = df['PublishTime'].agg(['max'])
+    subtracted_date = pd.to_datetime(max_date) - timedelta(days=day_frame)
+    final_df = df.loc[df['PublishTime'] >= subtracted_date["max"]]
+
+    return final_df
+
+def generate_cols_for_temperature_analysis(df):
+    df = df.copy()
+    df["sequential"] = df.groupby('video_id').cumcount()+1
+    age_df = df.groupby(["video_id"]).agg({"views":np.max, "likes":np.max , "comment_count":np.max , "dislikes":np.max , "sequential": np.max}).reset_index()
+    age_df.rename(columns={"views": "total_view", "likes": "total_likes", "comment_count": "total_comment", "dislikes": "total_dislikes", "sequential": "age_in_days"}, inplace=True)
+    age_df["views_per_hr"] = age_df["total_view"]/(age_df["age_in_days"]*8)
+    age_df["likes_per_hr"] = age_df["total_likes"]/(age_df["age_in_days"]*8)
+    age_df["comment_per_hr"] = age_df["total_comment"]/(age_df["age_in_days"]*8)
+    age_df["dislikes_per_hr"] = age_df["total_dislikes"]/(age_df["age_in_days"]*8)
+
     # Dropping the duplicate - analysing only at the time of trending
     df.drop_duplicates(subset=['video_id'], inplace=True)
     df.drop(df[df["video_id"] == "#NAME?"].index, inplace=True)
     df.drop(df[df["video_id"] == "#VALUE!"].index, inplace=True)
 
+    # Merge the age & temperature data
+    final_df = df.merge(age_df, how='left', on='video_id')
+
+    return final_df
+
+def clean_create_neccessary_columns(df, days=90):
+    # Filter the data
+    df = filter_data(df, day_frame=days)
     df = df.copy()
 
+    # Dropping the duplicate - analysing only at the time of trending
+    df = generate_cols_for_temperature_analysis(df=df)
+
     # Create additional columns
-    df["TrendingDate"] = pd.to_datetime(df['trending_date'], format='%y.%d.%m')
-    df["PublishTime"] = pd.to_datetime(df['publish_time'], format='%Y-%m-%dT%H:%M:%S.%fZ')
-    df["TrendingTimeTaken"] = (df['TrendingDate'] - df['PublishTime']).dt.total_seconds() / 60 / 60
-    df["trending_time_taken"] = df["TrendingTimeTaken"].abs()
     df["publish_date"] = df['PublishTime'].dt.strftime('%d-%m-%Y')
+    df["trending_weekday"] = df['TrendingDate'].dt.day_name()
+    df["trending_hour"] = df['TrendingDate'].dt.hour
+    df["trending_month"] = df['TrendingDate'].dt.month_name()
     df["publish_weekday"] = df['PublishTime'].dt.day_name()
     df["publish_hour"] = df['PublishTime'].dt.hour
-    df["publish_month"] = df['PublishTime'].dt.month_name()
-    df["sequential"] = df.groupby('video_id').cumcount()+1
+    df["publish_month"] = df['PublishTime'].dt.month_name() 
     df["engagement"] = df["likes"] + df["dislikes"] + df["comment_count"]
-    df["video_age"] = 1
+    df['title_length'] = df['title'].str.len()
+    df['desc_length'] = df['description'].str.len()
+    df['num_tags'] = df['tags'].apply(lambda x: len(x.split('|')) if x != '[none]' else 0)
+    df['tags_length'] = df['tags'].apply(lambda x: len(x.replace('|', '')) if x != '[none]' else 0)
 
     # Create columns for promotional analysis
     url_df = url_data_for_promotion_analysis(df=df, col_name='description')
@@ -107,11 +143,18 @@ def get_links(txt):
 
     return url_list
 
+def get_cleaned_text(x):
+    try:
+        x = x.lower()
+    except:
+        x = ""
+
+    return x
 
 def clean_stopwords(df, col_name='title'):
     contractions = contractions_dict
 
-    nltk_download('stopwords')
+    # nltk_download('stopwords')
 
     # if a contraction has more than one possible expanded forms, we replace it 
     # with a list of these possible forms
@@ -125,7 +168,7 @@ def clean_stopwords(df, col_name='title'):
 
     tokenizer = RegexpTokenizer(r"[\w']+")
 
-    all_titles = ' '.join([x.lower() for x in df[col_name]])
+    all_titles = ' '.join([get_cleaned_text(x) for x in df[col_name]])
     for k,v in contractions.items():
         if isinstance(v, list):
             v = random.choice(v)
@@ -140,17 +183,41 @@ def col_func(word, font_size, position, orientation, font_path, random_state):
     colors = ["#14110c", "#214658", "#e7aa27", "#dc4e24"]
     return colors[len(word)%len(colors)]
 
-def get_word_cloud(words_excl_stopwords):
+def save_words_in_excel(df, col_name, country):
+    words, words_excl_stopwords = clean_stopwords(df=df, col_name=col_name)
+    word_df = pd.DataFrame({"words": words_excl_stopwords}).reset_index()
+    word_df.columns = ["index", "words"]
+    save_df = pd.DataFrame(word_df.groupby(["words"])["index"].count().sort_values(ascending=False).reset_index())
+    save_df.columns = ["words", "count"]
+    file_name = os.path.join(cwd, 'assets', 'wc_data', f'{country}_wc_{col_name}.xlsx')
+    save_df.to_excel(file_name)
+
+def get_word_count_analysis(col_name, country, top=10):
+    file_name = os.path.join(cwd, 'assets', 'wc_data', f'{country}_wc_{col_name}.xlsx')
+    word_df = pd.read_excel(file_name)
+    word_df = word_df[0:top]
+
+    return word_df
+
+def get_word_cloud_img_obj(col_name, country):
+    file_name = os.path.join(cwd, 'assets', 'wc_data', f'{country}-wc-{col_name}.xlsx')
+    word_df = pd.read_excel(file_name)
+    words_excl_stopwords = list(word_df["words"])
     wc = wordcloud.WordCloud(width=1920, height=1080, collocations=False, 
                          background_color="#262b49", color_func=col_func, 
                          max_words=100,random_state=1, max_font_size=WC_MAX_FZ, 
                          relative_scaling=WC_RS
                         ).generate_from_frequencies(dict(Counter(words_excl_stopwords)))
+    
+    plt.figure(figsize=(8, 4))
+    plt.imshow(wc, interpolation="bilinear")
+    plt.axis("off")
 
-    fig, ax = plt.subplots(figsize=(20,10))
-    ax.imshow(wc, interpolation='lanczos')
-    ax.axis("off")
-    plt.tight_layout(pad=0)
-    plt.savefig('/assets/img/yta2-commwords-exc.png', dpi=300)
+    # Convert the plot to an image and encode it in base64
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    plt.close()
+    buffer.seek(0)
+    img_data = base64.b64encode(buffer.read()).decode()
 
-
+    return img_data

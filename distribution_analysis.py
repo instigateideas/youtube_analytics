@@ -11,20 +11,6 @@ data = {
     ]
 }
 
-def distribuition_of_text_data(df, col_name):
-    text_lengths = df[col_name].apply(lambda x: len(x))
-    mini = int(text_lengths.min())
-    qut25 = int(text_lengths.quantile(q=0.25))
-    qut50 = int(text_lengths.quantile(q=0.50))
-    qut75 = int(text_lengths.quantile(q=0.75))
-    qut90 = int(text_lengths.quantile(q=0.90))
-    maxi = int(text_lengths.max())
-    avg = int(text_lengths.mean())
-
-    data = f"Avg:{avg};[Min:{mini}; Quantile 25%-{qut25} 50%-{qut50} 75%-{qut75} 90%-{qut90}; Max: {maxi}]"
-
-    return data
-
 def len_checker(x):
     try:
         y = len(x)

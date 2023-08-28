@@ -88,13 +88,14 @@
 
 .depth-content {
     width: 100%;
+    padding-top: 20px;
     padding-left: 20px;
     padding-right: 20px;
 }
 
 .depth-box {
     width: 100%;
-    height: 75.5em;
+    height: 90em;
     border: 1px solid white;
     border-radius: 5px;
 }

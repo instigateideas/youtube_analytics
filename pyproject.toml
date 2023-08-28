@@ -17,10 +17,16 @@ nltk = "^3.8.1"
 matplotlib = "^3.7.2"
 wordcloud = "^1.9.2"
 emoji = "^2.8.0"
-imageai = "^3.0.3"
+imageai = "2.1.0"
 torch = "^2.0.1"
 torchvision = "^0.15.2"
 opencv-python = "^4.8.0.76"
+seaborn = "^0.12.2"
+numpy = "^1.25.2"
+keras = "^2.13.1"
+openpyxl = "^3.1.2"
+notebook = "^7.0.2"
+dash-daq = "^0.5.0"
 
 
 [build-system]

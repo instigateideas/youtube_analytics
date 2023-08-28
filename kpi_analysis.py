@@ -54,6 +54,12 @@ def country_kpi_analysis(df):
     avg_comments = int(df["comment_count"].mean())
     avg_dislikes = int(df["dislikes"].mean())
 
+    # Temperature analysis calculations
+    avg_views_temp = int(df["views_per_hr"].mean())
+    avg_likes_temp = int(df["likes_per_hr"].mean())
+    avg_comments_temp = int(df["comment_per_hr"].mean())
+    avg_dislikes_temp = int(df["dislikes_per_hr"].mean())
+
     # Video age is nothing but time it remains trending
     avg_time_to_video_trend = int(df['trending_time_taken'].mean())
 
@@ -67,10 +73,10 @@ def country_kpi_analysis(df):
     ]
 
     # Metric analysis
-    y = [{"value": millions(total_views), "avg": thousands(avg_views)}, 
-         {"value": millions(total_likes), "avg": thousands(avg_likes)}, 
-         {"value": millions(total_comments), "avg": thousands(avg_comments)}, 
-         {"value": millions(total_dislikes), "avg": thousands(avg_dislikes)}
+    y = [{"value": millions(total_views), "avg": thousands(avg_views), "temp": thousands(avg_views_temp)}, 
+         {"value": millions(total_likes), "avg": thousands(avg_likes), "temp": thousands(avg_likes_temp)}, 
+         {"value": millions(total_comments), "avg": thousands(avg_comments), "temp": thousands(avg_comments_temp)}, 
+         {"value": millions(total_dislikes), "avg": thousands(avg_dislikes), "temp": thousands(avg_dislikes_temp)}
     ]
 
     return x, y
@@ -85,6 +91,7 @@ def update_metrics_data(update_data, default_metric_data):
     for ind_, metric_data in enumerate(default_metric_data):
         default_metric_data[ind_]["value"] = update_data[ind_]["value"]
         default_metric_data[ind_]["avg"] = update_data[ind_]["avg"]
+        default_metric_data[ind_]["temp"] = update_data[ind_]["temp"]
 
     return default_metric_data
 
