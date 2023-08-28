@@ -3,3 +3,59 @@
 .insights-container {
     width: 100%;
 }
+
+.insights-content {
+    width: 100%;
+    padding: 20px;
+    padding-top: 0px;
+}
+
+.insights-box {
+    width: 100%;
+    height: 25em;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.insights-title {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* .insights-text {
+    width: 100%;
+    justify-content: left;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 2px;
+} */
+
+.insight-sub-head {
+    width: 100%;
+    justify-content: left;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 2px;
+    color: #14acff;
+}
+
+.sub-head-content {
+    width: 100%;
+    justify-content: left;
+    font-size: 14px;
+    font-weight: 300;
+    padding-left: 20px;
+}
+
+.insights-footer {
+    width: 100%;
+    justify-content: right;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 250;
+    color: wheat;
+}

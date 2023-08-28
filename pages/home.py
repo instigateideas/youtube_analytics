@@ -12,6 +12,7 @@ from distribution_analysis import get_distribution_analysis
 from correlation_analysis import get_correlation_analysis_layout, get_heatmap_figure
 from top5_analysis import get_top5_analysis
 from graphical_analysis import get_categorory_trending_graph, get_trending_channels_graph
+from insights import insights_layout
 
 # Load the USA and IND Data
 cleaned_usa_df, cleaned_ind_df = clean_and_load_data()
@@ -67,7 +68,7 @@ depth_analysis_data = [
     promotional_analysis_data,
     {"img": "/assets/img/object-detection.png", "title": "Object Detection",
         "analysis": [
-            {"title": "Top 5 Objects Detected from Thumbnails", "data_usa": "tie, person", "data_ind": "tie, person"},
+            {"title": "Top 5 Objects Detected from Thumbnails", "data_usa": "person, tie, car, bowl, donut", "data_ind": "person, tv, tree, tie, vegetable"},
     ]}
 ]
 
@@ -84,7 +85,8 @@ layout = dbc.Container([
         html.Div(children=[
                 html.Div(className="home-partion"),
                 html.Br(),
-                ytb_kpi,         
+                ytb_kpi,
+                insights_layout,        
                 usa_metrics,
                 ind_metrics,
                 usa_trending_channel,
