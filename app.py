@@ -514,6 +514,115 @@ def ind_channel_update_chart(div1_clicks, div2_clicks, div3_clicks, \
 
     return updated_chart, chart_title
 
+# Collapse Styling
+@app.callback(
+    Output("insights-text-id", "is_open"),
+    Output('insights-text-id', 'style'),
+    Output("insights-box-id", 'style'),
+    Output('insights-collapse-btn', 'children'),
+    Input("insights-collapse-btn", "n_clicks"),
+    Input('insights-text-id', 'style'),
+    State("insights-text-id", "is_open"),
+    Input('insights-collapse-btn', 'children')
+)
+def key_insights_toggle_collapse(n, graph_style, is_open, btn_value):
+    new_graph_style = {'display': 'none'}
+    insight_box_style = {'height': '3em'}
+    if n:
+        if graph_style.get('display') == 'none':
+            new_graph_style = {'display': 'block'}
+            insight_box_style = {'height': '25em'}
+            btn_value= "Hide"
+        else:
+            new_graph_style = {'display': 'none'}
+            insight_box_style = {'height': '3em'}
+            btn_value = "Collapse"
+
+        return not is_open, new_graph_style, insight_box_style, btn_value
+
+    return is_open, new_graph_style, insight_box_style, btn_value
+
+@app.callback(
+    Output("depth-text-id", "is_open"),
+    Output('depth-text-id', 'style'),
+    Output("depth-box-id", 'style'),
+    Output('depth-collapse-btn', 'children'),
+    Input("depth-collapse-btn", "n_clicks"),
+    State("depth-text-id", "is_open"),
+    Input('depth-text-id', 'style'),
+    Input('insights-collapse-btn', 'children')
+)
+def depth_toggle_collapse(n, is_open, pane_style, btn_value):
+    new_pane_style = {'display': 'none'}
+    depth_box = {'height': '2.5em'}
+    if n:
+        if pane_style.get('display') == 'none':
+            new_pane_style = {'display': 'block'}
+            depth_box = {'height': '89.2em'}
+            btn_value = 'Hide'
+        else:
+            new_pane_style = {'display': 'none'}
+            depth_box = {'height': '2.5em'}
+            btn_value = 'Collapse'
+
+        return not is_open, new_pane_style, depth_box, btn_value
+
+    return is_open, new_pane_style, depth_box, btn_value
+
+@app.callback(
+    Output("corr-text-id", "is_open"),
+    Output('corr-text-id', 'style'),
+    Output("corr-box-id", 'style'),
+    Output('corr-collapse-btn', 'children'),
+    Input("corr-collapse-btn", "n_clicks"),
+    State("corr-text-id", "is_open"),
+    Input('corr-text-id', 'style'),
+    Input('corr-collapse-btn', 'children')
+)
+def corr_toggle_collapse(n, is_open, pane_style, btn_value):
+    new_pane_style = {'display': 'none'}
+    depth_box = {'height': '2.5em'}
+    if n:
+        if pane_style.get('display') == 'none':
+            new_pane_style = {'display': 'block'}
+            depth_box = {'height': '54em'}
+            btn_value = 'Hide'
+        else:
+            new_pane_style = {'display': 'none'}
+            depth_box = {'height': '2.5em'}
+            btn_value = 'Collapse'
+
+        return not is_open, new_pane_style, depth_box, btn_value
+
+    return is_open, new_pane_style, depth_box, btn_value
+
+@app.callback(
+    Output("scatter-text-id", "is_open"),
+    Output('scatter-text-id', 'style'),
+    Output("scatter-box-id", 'style'),
+    Output('scatter-collapse-btn', 'children'),
+    Input("scatter-collapse-btn", "n_clicks"),
+    State("scatter-text-id", "is_open"),
+    Input('scatter-text-id', 'style'),
+    Input('scatter-collapse-btn', 'children')
+)
+def scatter_toggle_collapse(n, is_open, pane_style, btn_value):
+    new_pane_style = {'display': 'none'}
+    depth_box = {'height': '2.5em'}
+    if n:
+        if pane_style.get('display') == 'none':
+            new_pane_style = {'display': 'block'}
+            depth_box = {'height': '52em'}
+            btn_value = 'Hide'
+        else:
+            new_pane_style = {'display': 'none'}
+            depth_box = {'height': '2.5em'}
+            btn_value = 'Collapse'
+
+        return not is_open, new_pane_style, depth_box, btn_value
+
+    return is_open, new_pane_style, depth_box, btn_value
+
 @app.callback(Output('page-content', 'children'),
         [Input('url', 'pathname')])
 def display_page(pathname):
@@ -527,7 +636,6 @@ def display_page(pathname):
         return about_us.layout
     else:
         return "404 Page Error! Please choose a link"
-
 
 if __name__ == '__main__':
 	app.run(debug=True)

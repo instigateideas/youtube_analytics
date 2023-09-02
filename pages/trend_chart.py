@@ -191,30 +191,35 @@ def depth_analysis_layout(data):
     rwt = html.Div(children=[
         html.Div(children=[
             html.Div(children=[
-                html.Div("Depth Analysis", className="depth-title"),
                 html.Div(children=[
+                    html.Div("Depth Analysis", className="depth-title"),
+                    html.Button("Collapse", id="depth-collapse-btn", className="depth-expand-btn"),
+                ], className="depth-title-box"),
+                dbc.Collapse(children=[
                     html.Div(children=[
                         html.Div(children=[
-                            analysis_header_block(datum),
-                            # Head Analysis Block
-                            depth_analysis_head_block(),
-                            html.Div([
-                                dbc.Row([
-                                    dbc.Col(html.Div(children=[dat["title"]], className="analysis-name-value")),
-                                    dbc.Col(html.Div(children=[
-                                        html.Div(children=[dat["data_usa"]], className="analysis-market-name")
-                                    ], className="analysis-market-value-head")),  
-                                    dbc.Col(html.Div(children=[
-                                        html.Div(children=[dat["data_ind"]], className="analysis-market-name")
-                                    ], className="analysis-market-value-head"))
-                                ]
-                            , align="center")
-                            for dat in datum["analysis"]])
-                        ])
-                        # various_analysis_block()
-                    ], className="depth-analysis-pane")
-                for datum in data], className="depth-analysis-container")
-            ], className="depth-box")
+                            html.Div(children=[
+                                analysis_header_block(datum),
+                                # Head Analysis Block
+                                depth_analysis_head_block(),
+                                html.Div([
+                                    dbc.Row([
+                                        dbc.Col(html.Div(children=[dat["title"]], className="analysis-name-value")),
+                                        dbc.Col(html.Div(children=[
+                                            html.Div(children=[dat["data_usa"]], className="analysis-market-name")
+                                        ], className="analysis-market-value-head")),  
+                                        dbc.Col(html.Div(children=[
+                                            html.Div(children=[dat["data_ind"]], className="analysis-market-name")
+                                        ], className="analysis-market-value-head"))
+                                    ]
+                                , align="center")
+                                for dat in datum["analysis"]])
+                            ])
+                            # various_analysis_block()
+                        ], className="depth-analysis-pane")
+                    for datum in data], className="depth-analysis-container")
+                ], id="depth-text-id", className="depth-text-container", is_open=False),
+            ], id="depth-box-id", className="depth-box")
         ], className="depth-content")
     ], className="depth-container")  
 

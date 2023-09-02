@@ -1,4 +1,5 @@
 from dash import Dash, html, dcc, Input, Output, State
+import dash_bootstrap_components as dbc
 
 insights = {
     "Channel Diversity and Trends": ["India's 14% surplus channels foster a vibrant trending environment, with an average of 7 trending videos per channel—distinctly surpassing the USA's 2, underscoring India's robust creator landscape."],
@@ -22,14 +23,19 @@ insights = {
 insights_layout =html.Div(children=[
     html.Div(children=[
         html.Div(children=[
-            html.Div("Key Insights Discovered", className="insights-title"),
             html.Div(children=[
+                html.Div("Key Insights Discovered", className="insights-title"),
+                html.Button("Collapse", id="insights-collapse-btn", className="insights-expand-btn"),
+            ], className="insights-title-box"),
+            dbc.Collapse([
                 html.Div(children=[
-                    html.Div(heads, className="insight-sub-head"),
-                    html.Div(f"- {insight[0]}", className="sub-head-content")
-                ])
-            for heads, insight in insights.items()], className="insights-text"),
-            html.Div("Last 90 days data is analysed to gather insights", className="insights-footer")
-        ], className="insights-box")
+                    html.Div(children=[
+                        html.Div(heads, className="insight-sub-head"),
+                        html.Div(f"- {insight[0]}", className="sub-head-content")
+                    ])
+                for heads, insight in insights.items()], className="insights-text"),
+                html.Div("Last 90 days data is analysed to gather insights", className="insights-footer")
+            ], id="insights-text-id", className="insights-text-container", is_open=False)
+        ], id='insights-box-id', className="insights-box")
     ], className="insights-content")  
 ], className="insights-container")

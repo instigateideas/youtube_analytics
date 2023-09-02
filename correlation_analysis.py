@@ -90,31 +90,36 @@ def get_correlation_analysis_layout(default_fig):
     rwt = html.Div(children=[
         html.Div(children=[
             html.Div(children=[
-            html.Div(children=[
-                html.Div("Correlation & Word Cloud Analysis", className="corr-title"),
-                html.Div([
-                    daq.ToggleSwitch(
-                        id='my-toggle-switch',
-                        className='toggle-switch',
-                        size=40,
-                        label="",
-                        value=False
-                    ),
-                    html.Div(id='my-toggle-switch-output', className="toggle-desc")
-                ], className="toggle-container"),
-                get_btns_layout_of_countries(),
-                html.Div(children=[
                     html.Div(children=[
-                            dcc.Graph(figure=default_fig, id='correlation-heatmap', className="corr-graph"),
-                        ], className='graph-content')
-                    ], className="corr-analysis-container", id="corr-analysis-container-id", style={'display': 'block'}),
-                    html.Div(children=[
+                        html.Div("Correlation & Word Cloud Analysis", className="corr-title"),
+                        html.Button("Collapse", id="corr-collapse-btn", className="corr-expand-btn"),
+                    ], className="corr-title-box"),
+                    dbc.Collapse([
                         html.Div(children=[
-                            html.Img(src="/assets/img/usa-wc-title.png", id="wordcloud-image-id", className="wordcloud-image")
-                        ], className='wordcloud-image-content')
-                    ], className="wordcloud-analysis-container", id="wordcloud-analysis-container-id", style={'display': 'none'})
-                ], className='corr-wc-container'),
-            ], className="corr-box"),
+                        html.Div([
+                            daq.ToggleSwitch(
+                                id='my-toggle-switch',
+                                className='toggle-switch',
+                                size=40,
+                                label="",
+                                value=False
+                            ),
+                            html.Div(id='my-toggle-switch-output', className="toggle-desc")
+                        ], className="toggle-container"),
+                        get_btns_layout_of_countries(),
+                        html.Div(children=[
+                            html.Div(children=[
+                                    dcc.Graph(figure=default_fig, id='correlation-heatmap', className="corr-graph"),
+                                ], className='graph-content')
+                            ], className="corr-analysis-container", id="corr-analysis-container-id", style={'display': 'block'}),
+                            html.Div(children=[
+                                html.Div(children=[
+                                    html.Img(src="/assets/img/usa-wc-title.png", id="wordcloud-image-id", className="wordcloud-image")
+                                ], className='wordcloud-image-content')
+                            ], className="wordcloud-analysis-container", id="wordcloud-analysis-container-id", style={'display': 'none'})
+                    ], className='corr-wc-container'),
+                ], id="corr-text-id", className="corr-text-container", is_open=False)
+            ], id='corr-box-id', className="corr-box"),
         ], className="corr-content")
     ], className="corr-container")  
 

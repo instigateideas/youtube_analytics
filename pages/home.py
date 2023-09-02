@@ -12,6 +12,7 @@ from distribution_analysis import get_distribution_analysis
 from correlation_analysis import get_correlation_analysis_layout, get_heatmap_figure
 from top5_analysis import get_top5_analysis
 from graphical_analysis import get_categorory_trending_graph, get_trending_channels_graph
+from scatter_analysis import get_scatter_analysis_layout
 from insights import insights_layout
 
 # Load the USA and IND Data
@@ -78,6 +79,7 @@ usa_metrics = get_trendgraph_of_country(metric_data=usa_metric_data, data_input=
 ind_metrics = get_trendgraph_of_country(metric_data=ind_metric_data, data_input=ind_category_fig, country_name="IND")
 usa_trending_channel = channels_trending_video(chart_fig=usa_trend_channel, metric_data=usa_trend_analysis_data, country_name="USA")
 ind_trending_channel = channels_trending_video(chart_fig=ind_trend_channel, metric_data=ind_trend_analysis_data, country_name="IND")
+scatter_layout = get_scatter_analysis_layout()
 depth_metrics = depth_analysis_layout(data=depth_analysis_data)
 
 layout = dbc.Container([
@@ -85,14 +87,15 @@ layout = dbc.Container([
         html.Div(children=[
                 html.Div(className="home-partion"),
                 html.Br(),
-                ytb_kpi,
-                insights_layout,        
+                ytb_kpi,   
                 usa_metrics,
                 ind_metrics,
                 usa_trending_channel,
                 ind_trending_channel,
+                scatter_layout,
                 correlation_layout,
-                depth_metrics
+                depth_metrics,
+                insights_layout,
             ], className="graph-container-block"),
             html.Div(children=[
                 html.Div(children=[html.Div("Made with"),
